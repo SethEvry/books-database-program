@@ -200,7 +200,21 @@ def app():
                 time.sleep(1.5)
                 pass
         elif choice == "4":  # Book Analysis
-            pass
+            newest_book = session.query(Book).order_by(
+                Book.published_date.desc()).first()
+            oldest_book = session.query(Book).order_by(
+                Book.published_date).first()
+            total_books = session.query(Book).count()
+            python_books = session.query(Book).filter(
+                Book.title.like('%Python%')).count()
+            print(f'''
+                  \n****** BOOK ANALYSIS ******
+                  \r Oldest Book: {oldest_book}
+                  \r Newest Book: {newest_book}
+                  \r Total Books: {total_books}
+                  \r Number of Python Books: {python_books}
+                  \r***************************''')
+            input('\n\nPress enter to return to the main menu.')
         else:                 # Exit
             print('Goodbye!')
             app_running = False
