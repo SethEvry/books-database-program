@@ -25,7 +25,7 @@ def menu():
 
 def clean_date(date_string):
     fmt = '%B %d, %Y'
-    print(datetime.datetime.strptime(date_string, fmt))
+    return datetime.datetime.strptime(date_string, fmt).date()
 
 
 def add_csv():
