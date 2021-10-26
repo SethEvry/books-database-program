@@ -191,7 +191,13 @@ def app():
                     'Date', the_book.published_date)
                 the_book.price = edit_check('Price', the_book.price)
                 session.commit()
+                print('Book updated!')
+                time.sleep(1.5)
             elif sub_choice == '2':
+                session.delete(the_book)
+                session.commit()
+                print('Book deleted!')
+                time.sleep(1.5)
                 pass
         elif choice == "4":  # Book Analysis
             pass
