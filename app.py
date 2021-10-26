@@ -25,11 +25,30 @@ def menu():
 
 def clean_date(date_string):
     fmt = '%B %d, %Y'
-    return datetime.datetime.strptime(date_string, fmt).date()
+    try:
+        date = datetime.datetime.strptime(date_string, fmt).date()
+    except ValueError:
+        input('''
+              \n****** DATE ERROR ******
+              \rThe Date format should include a valid Month, Day, and Year from the past
+              \r Ex: Juanuary 1, 2021
+              \r Press Enter to try again.
+              \r**************************''')
+        return
+    else:
+        return date
 
 
 def clean_price(price_string):
-    price_float = float(price_string)
+    try:
+        price_float = float(price_string)
+    except ValueError:
+        input('''
+              \n****** Price ERROR ******
+              \rThe Date format should include a price
+              \r Ex: 19.99
+              \r Press Enter to try again.
+              \r**************************''')
     return int(price_float * 100)
 
 
@@ -55,7 +74,20 @@ def app():
     while app_running:
         choice = menu()
         if choice == "1":
-            pass
+            title = input('Title: ')
+            author = input('Author: ')
+            date_error = True
+            while date_error:
+                date = input('Published Date (Ex: January 1, 2021): ')
+                date = clean_date(date)
+                if type(date) == datetime.date:
+                    date_error = False
+            price_error = True
+            while price_error:
+                price = input('Price (Ex: 19.99): ')
+                price = clean_price(price)
+                if type(price) == int:
+                    price_error = False
         elif choice == "2":
             pass
         elif choice == "3":
@@ -69,8 +101,4 @@ def app():
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    # app()
-    add_csv()
-
-    for book in session.query(Book):
-        print(book)
+    app()
