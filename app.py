@@ -1,4 +1,6 @@
 from models import (Base, session, Book, engine)
+import csv
+import datetime
 
 
 def menu():
@@ -21,6 +23,35 @@ def menu():
                   \rPress enter to try again.''')
 
 
+def clean_date(date_string):
+    fmt = '%B %d, %Y'
+    print(datetime.datetime.strptime(date_string, fmt))
+
+
+def add_csv():
+    with open('suggested_books.csv') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            print(row)
+
+
+def app():
+    app_running = True
+    while app_running:
+        choice = menu()
+        if choice == "1":
+            pass
+        elif choice == "2":
+            pass
+        elif choice == "3":
+            pass
+        elif choice == "4":
+            pass
+        else:
+            print('Goodbye!')
+            app_running = False
+
+
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    menu()
+    # app()
