@@ -1,6 +1,7 @@
 from models import (Base, session, Book, engine)
 import csv
 import datetime
+import time
 
 
 def menu():
@@ -45,7 +46,7 @@ def clean_price(price_string):
     except ValueError:
         input('''
               \n****** Price ERROR ******
-              \rThe Date format should include a price
+              \rThe Date format should include a price without a currency symbol.
               \r Ex: 19.99
               \r Press Enter to try again.
               \r**************************''')
@@ -73,7 +74,7 @@ def app():
     app_running = True
     while app_running:
         choice = menu()
-        if choice == "1":
+        if choice == "1":  # Add book
             title = input('Title: ')
             author = input('Author: ')
             date_error = True
@@ -88,13 +89,19 @@ def app():
                 price = clean_price(price)
                 if type(price) == int:
                     price_error = False
-        elif choice == "2":
+            new_book = Book(title=title, author=author,
+                            published_date=date, price=price)
+            session.add(new_book)
+            session.commit()
+            print('Book Added!')
+            time.sleep(1.5)
+        elif choice == "2":  # View all books
             pass
-        elif choice == "3":
+        elif choice == "3":  # Search for a book
             pass
-        elif choice == "4":
+        elif choice == "4":  # Book Analysis
             pass
-        else:
+        else:                 # Exit
             print('Goodbye!')
             app_running = False
 
